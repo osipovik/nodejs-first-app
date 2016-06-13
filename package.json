@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/osipovik/nodejs-first-app.git"
+  },
+  "author": "Osipoff",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/osipovik/nodejs-first-app/issues"
+  },
+  "homepage": "https://github.com/osipovik/nodejs-first-app#readme",
+  "dependencies": {
+    "escape-html": "^1.0.3",
+    "fs": "0.0.2",
+    "http": "0.0.0",
+    "socket.io": "^1.4.6",
+    "socketio": "^1.0.0"
+  }
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="/socket.io/socket.io.js"></script>
+		<style type="text/css">
+			body {
+				margin: 0;
+				font-size: 22px;
+			}
+			.panel {
+				position: fixed;;
+				width: 100%;
+				bottom: 0;
+				left: 0;
+				padding: 10px;
+				box-sizing: border-box;
+			}
+			input {
+				font-size: inherit;
+				width: 100%;
+			}
+			.inputs {
+				display: flex;
+			}
+			.input-left {
+				width: 20%;
+				padding-right: 1%;
+			}
+			.input-right {
+				flex-grow: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="messages">
+			<p align="center" id="greeting">Добро пожаловать</p>
+		</div>
+		<div class="panel">
+			<form onsubmit="sendMessage(this); return false;">
+				<div class="inputs">
+					<div class="input-left">
+						<input name="nickname" type="text" autofocus="" autocomplete="off" placeholder="Имя" />
+					</div>
+					<div class="input-right">
+						<input name="message" type="text"  autocomplete="off" placeholder="Сообщение" />
+					</div>
+				</div>
+				<input type="submit" style="display: none;" />
+			</form>
+		</div>
+		<script type="text/javascript">
+			var socket = io({transports: ['websocket']});
+			var messagesContainer = document.getElementById('messages');
+
+			socket.on('message', function(data) {
+				renderMessage(data.nickname, data.message);
+			});
+
+			function sendMessage(form) {
+				nickname = form.nickname.value;
+				message = form.message.value;
+
+				if (nickname && message) {
+					form.message.value = '';
+					socket.emit('message', {nickname: nickname, message: message});
+					renderMessage(nickname, message);
+				}
+			}
+
+			function renderMessage(nickname, message) {
+				var div = document.createElement("DIV");
+				div.innerHTML = '<span><strong>' + nickname + ': </strong>' + message + '</span>';
+				messagesContainer.appendChild(div);
+				document.getElementById('greeting').style.display = 'none';
+			}
+		</script>
+	</body>
+</html>
